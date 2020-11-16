@@ -19,3 +19,4 @@ hash.each do |key, value|
 end
 puts hash
 puts "#{sum}"
+

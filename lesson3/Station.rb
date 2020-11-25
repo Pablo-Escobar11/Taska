@@ -13,16 +13,16 @@ class Station
   
   def send_train(train)
     trains.delete(train)
+    puts @trains
+    
   end
   
-  def show_trains(type)
+  def show_trains(type = false)
     trains.each do |train|
-    if train.type == type
-      puts train.number
-    elsif type == "passengers"
-      puts "Trains at the station #{@name} passngers trains #{train.number}"
-    else 
-      puts "Trains at the station #{@name} cargo trains  #{train.number}"
+    unless type
+      trains.each {|train| puts train.number if train.type == "passengers"}
+    else
+      trains.each{|train| puts "Cargo train #{train.number}"}  
     end
     end
   end    
@@ -65,14 +65,17 @@ end
   station7 = Station.new("Lepel")
   station5 = Station.new("Chashniki")
 
-  train1 = Train.new(1, "Passengers", 2)
-  train2 = Train.new(2, "Cargo", 3)
+  train1 = Train.new(1, "passengers", 2)
+  train2 = Train.new(2, "cargo", 3)
 
   station1.get_tarin(train1)
   station1.get_tarin(train2)
 
-  station1.show_trains("cargo")
   station1.show_trains("passengers")
+  station1.show_trains("cargo")
+
+  station1.send_train(train1)
+  
 
 
   

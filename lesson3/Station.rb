@@ -12,7 +12,7 @@ class Station
   end
   
   def send_train(train)
-    @trains.delete(train)   
+    @trains.delete(train)  
   end
   
   def show_trains(type)
@@ -69,7 +69,38 @@ class Train
   def speed_stop
   @speed = 0  
   end
-end
+
+  def car_add
+    if @speed.zero?
+      @car_count += 1
+    end  
+  end
+
+  def car_remove 
+    if @speed.zero?
+      @car_count -= 1
+    end
+  end 
+
+  def get_route(route)
+    @route = route
+    puts "train #{number} has a route #{route.stations.first.name} - #{route.stations.last.name}"
+  end
+
+  def go_to_next_station(station)
+    station.send_train(@train) 
+  end
+
+  def previous_station(station)
+    station_index = @route.stations.index(station)
+    puts "previous station is #{@route.stations[station_index - 1].name}" if station_index != 0
+  end  
+
+  def next_station(station)
+    station_index = @route.stations.index(station)
+    puts "next station is #{@route.stations[station_index+1].name}" if station_index < @route.stations.size
+  end
+end  
   
 station1 = Station.new("Orsha-center")
 station7 = Station.new("Lepel")
@@ -80,6 +111,7 @@ route1.add_stations(station5)
 puts "#{route1.stations}"
 route1.remove_stations(station5)
 puts "#{route1.stations}"
+route1.add_stations(station5)
 route1.show_sations
 
 train1 = Train.new(1, "passengers", 2)
@@ -89,13 +121,21 @@ train1.speed_dial(80)
 puts "Speed #{train1.speed}"
 train1.speed_stop
 puts "speed stop #{train1.speed}"
+train1.car_add
+puts "train #{train1.number} has #{train1.car_count} cars"
+train1.car_remove
+puts "train #{train1.number} cars left #{train1.car_count}"
+train2.get_route(route1)
+train2.previous_station(station5)
+train2.next_station(station5)
+train2.go_to_next_station(station5)
 
 station1.get_tarin(train1)
-station1.get_tarin(train2)
+station5.get_tarin(train2)
 puts "#{station1.trains}"
   
 station1.show_trains("passengers")
-station1.show_trains("cargo")
+station5.show_trains("cargo")
 station1.send_train(train1) 
 puts "#{station1.trains}"
 

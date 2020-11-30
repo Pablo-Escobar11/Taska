@@ -88,7 +88,17 @@ class Train
   end
 
   def go_to_next_station(station)
-    station.send_train(@train) 
+    station_index = @route.stations.index(station)
+    station.send_train(self)
+    @route.stations[station_index + 1]
+    station.get_tarin(self)
+  end
+
+  def go_to_previos_station(station)
+    station_index = @route.stations.index(station)
+    station.send_train(self)
+    @route.stations[station_index - 1]
+    station.get_tarin(self)
   end
 
   def previous_station(station)
@@ -129,15 +139,16 @@ train2.get_route(route1)
 train2.previous_station(station5)
 train2.next_station(station5)
 train2.go_to_next_station(station5)
+train2.go_to_previos_station(station5)
 
 station1.get_tarin(train1)
-station5.get_tarin(train2)
 puts "#{station1.trains}"
   
 station1.show_trains("passengers")
 station5.show_trains("cargo")
 station1.send_train(train1) 
 puts "#{station1.trains}"
+
 
 
 

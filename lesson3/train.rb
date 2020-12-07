@@ -1,12 +1,10 @@
 class Train
     
   attr_reader :number, :route, :station
-  attr_reader :type
   attr_accessor :cars, :speed
       
-  def initialize(number, type)
+  def initialize(number)
     @number = number
-    @type = type
     @speed = 0
     @cars = []
   end  
@@ -66,4 +64,5 @@ class Train
     puts "next station is #{@route.stations[station_index+1].name}" if station_index < @route.stations.size
   end
 end 
+
 

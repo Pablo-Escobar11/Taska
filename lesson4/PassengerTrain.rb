@@ -2,7 +2,8 @@ class PassengerTrain < Train
   attr_reader :cars, :type, :type_of_car
 
   def initialize(number, type = 'passenger')
-    super
+    super(number, speed, cars)
+    @type = type
   end
 
   def car_add(car)

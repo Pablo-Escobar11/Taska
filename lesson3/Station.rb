@@ -97,7 +97,7 @@ class Train
   end
 
   def go_to_previos_station
-    station_index = @route.stations.index(station)
+    station_index = @route.stations.index(@station)
     @station.send_train(self)
     @staion = @route.stations[station_index - 1]
     @station.get_train(self)
@@ -130,8 +130,8 @@ puts "#{route1.stations}"
 route1.add_station(station5)
 route1.show_sations
 
-train1 = Train.new(1, "passengers", 2)
-train2 = Train.new(2, "cargo", 3)
+train1 = Train.new(1, "passengers")
+train2 = Train.new(2, "cargo")
 
 train1.speed_dial(80)
 puts "Speed #{train1.speed}"

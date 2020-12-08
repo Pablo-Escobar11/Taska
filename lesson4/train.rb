@@ -1,12 +1,11 @@
 class Train
-  attr_reader :number, :route, :station, :type
-  attr_accessor :car_count, :speed
+  attr_reader :number, :route, :station
+  attr_accessor :speed, :cars
 
-  def initialize(number, type, car_count)
+  def initialize(number)
     @number = number
-    @type = type
-    @car_count = car_count
     @speed = 0
+    @cars = []
   end
 
   def speed_dial(speed)
@@ -17,12 +16,12 @@ class Train
     @speed = 0
   end
 
-  def car_add
-    @car_count += 1 if @speed.zero?
+  def car_add(car)
+    @cars << car if @speed.zero?
   end
 
-  def car_remove
-    @car_count -= 1 if @speed.zero?
+  def car_remove(car)
+    @cars.delete(car) if @speed.zero?
   end
 
   def get_route(route)

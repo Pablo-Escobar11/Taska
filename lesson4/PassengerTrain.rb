@@ -5,12 +5,4 @@ class PassengerTrain < Train
     super(number)
     @type = type
   end
-
-  def car_add(car)
-    super(car) if car.type_of_car == 'passengers'
-  end
-
-  def car_remove(car)
-    super(car) if car.type_of_car == 'passengers'
-  end
 end

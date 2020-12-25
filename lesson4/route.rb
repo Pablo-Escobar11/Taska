@@ -21,8 +21,7 @@ class Route
     end
   end
 
-  def show_sations
+  def show_stations
     stations.each { |station| puts station.name.to_s }
   end
 end
-

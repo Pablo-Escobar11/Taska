@@ -45,7 +45,7 @@ class Train
   def go_to_previos_station
     station_index = @route.stations.index(@station)
     @station.send_train(self)
-    @staion = @route.stations[station_index - 1]
+    @station = @route.stations[station_index - 1]
     @station.get_train(self)
   end
 

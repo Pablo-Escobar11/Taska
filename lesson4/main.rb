@@ -128,15 +128,15 @@ def train_go_to_previous_station
   puts 'which train? (input number)'
   number = gets.chomp.to_i
   train = @trains.detect { |train| train.number == number }
-  train.go_to_previous_station
+  train.go_to_previos_station
   puts "now your train at the station #{train.current_station}"
 end
 
 def show_trains_on_the_station
-  puts '1 - show gargo trains'
-  puts '2 - show passenger trains'
   puts 'input station name'
-  name = gets.chomp.to_i
+  name = gets.chomp
+  puts '1 - show cargo trains'
+  puts '2 - show passenger trains'
 
   choice4 = gets.chomp.to_i
   case choice4
@@ -145,11 +145,17 @@ def show_trains_on_the_station
     station = @stations.detect { |station| station.name == name }
     station.show_trains('cargo')
 
-  when 2
+  when 2 
     station = @stations.detect { |station| station.name == name }
     station.show_trains('passenger')
   end
 end
+
+def information
+  @trains.each { |train| puts "you'v got train: #{train.number}" }    
+  @stations.each_with_index { |station, index| puts "you'v got #{station.name} with #{index}" }
+  @route.each_with_index { |route, index| puts "you'v got #{route} with #{index}" }
+end 
 
 def menu
   @stations = []
@@ -179,36 +185,34 @@ def menu
       exit
     when 1
       create_train
-      @trains.each { |train| puts "you'v got train: #{train.number}" }
+      information
     when 2
       create_station
-      @stations.each { |station| puts "you'v got station: #{station.name}" }
+      information
     when 3
       add_car
-      @cars.each { |car| puts car.to_s }
     when 4
       delete_car
     when 5
-      @stations.each_with_index { |station, index| puts "you'v got #{station.name} with #{index}" }
+      information
       create_route
     when 6
-      @route.each_with_index { |route, index| puts "you'v got #{route.start_station.name} with #{index}" }
+      information
       add_station_to_route
     when 7
-      @route.each_with_index { |route, index| puts "you'v got #{route.start_station.name} with #{index}" }
+      information
       delete_station_from_route
     when 8
-      @route.each_with_index { |route, index| puts "you'v got #{route.start_station.name} with #{index}" }
-      @trains.each { |train| puts "you'v got train: #{train.number}" }
+      information
       train_take_route
     when 9
-      @trains.each { |train| puts "you'v got train: #{train.number}" }
+      information
       train_go_to_next_station
     when 10
-      @trains.each { |train| puts "you'v got train: #{train.number}" }
+      information
       train_go_to_previous_station
     when 11
-      @stations.each { |station| puts "you'v got station: #{station.name}" }
+      information
       show_trains_on_the_station
 
     end

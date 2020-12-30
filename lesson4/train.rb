@@ -1,6 +1,6 @@
 class Train
   attr_reader :number, :route, :station, :type
-  attr_accessor :speed, :cars, :type_of_car
+  attr_accessor :speed, :cars, :type_of_car, :start_station, :finish_station, :stations
 
   def initialize(number)
     @number = number
@@ -36,17 +36,25 @@ class Train
   end
 
   def go_to_next_station
-    station_index = @route.stations.index(@station)
-    @station.send_train(self)
-    @station = @route.stations[station_index + 1]
-    @station.get_train(self)
+    if @station.name == @route.stations.last.name
+      puts "you can't go, you at the last station"
+    else
+      station_index = @route.stations.index(@station)
+      @station.send_train(self)
+      @station = @route.stations[station_index + 1]
+      @station.get_train(self)
+    end
   end
 
   def go_to_previos_station
-    station_index = @route.stations.index(@station)
-    @station.send_train(self)
-    @station = @route.stations[station_index - 1]
-    @station.get_train(self)
+    if @station.name == @route.stations.first.name
+      puts "you can't go, you at the first station"
+    else
+      station_index = @route.stations.index(@station)
+      @station.send_train(self)
+      @station = @route.stations[station_index - 1]
+      @station.get_train(self)
+    end
   end
 
   def current_station

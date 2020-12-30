@@ -15,6 +15,13 @@ class Station
   end
 
   def show_trains(type)
-    trains.map { |train| puts "#{type} number is #{train.number}" if train.type == type }
+    puts 'choose another station' if @trains.empty?
+    trains.map do |train|
+      if  train.type == type
+        puts "#{type} number is #{train.number}"
+      else
+        puts 'you should choose another type'
+      end
+    end
   end
 end

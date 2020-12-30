@@ -43,9 +43,7 @@ def add_car
     if @trains.empty?
       puts 'you should create train'
     else
-      puts 'which train? (input number)'
-      number = gets.chomp.to_i
-      train = @trains.detect { |train| train.number == number }
+      train = choose_train
       train.car_add(@cars << CargoCar.new, 'cargo')
       puts "you add car #{@cars.last} to train number #{train.number}"
     end
@@ -54,9 +52,7 @@ def add_car
     if @trains.empty?
       puts 'you should create train'
     else
-      puts 'which train? (input number)'
-      number = gets.chomp.to_i
-      train = @trains.detect { |train| train.number == number }
+      train = choose_train
       train.car_add(@cars << PassengerCar.new, 'passenger')
       puts "you add car #{@cars.last} to train number #{train.number}"
     end
@@ -64,9 +60,7 @@ def add_car
 end
 
 def delete_car
-  puts 'which train? (input number)'
-  number = gets.chomp.to_i
-  train = @trains.detect { |train| train.number == number }
+  train = choose_train
   train.car_remove(train.cars.last)
   puts "#train has cars #{train.cars}"
 end
@@ -86,9 +80,7 @@ def create_route
 end
 
 def add_station_to_route
-  puts 'which station (input name)'
-  name = gets.chomp
-  station = @stations.detect { |station| station.name == name }
+  station = choose_station
   puts 'input route index'
   route_index = gets.chomp.to_i
   @route[route_index].add_station(station)
@@ -97,9 +89,7 @@ def add_station_to_route
 end
 
 def delete_station_from_route
-  puts 'which station (input name)'
-  name = gets.chomp
-  station = @stations.detect { |station| station.name == name }
+  station = choose_station
   puts 'input route index'
   route_index = gets.chomp.to_i
   @route[route_index].delete_station(station)
@@ -108,33 +98,25 @@ def delete_station_from_route
 end
 
 def train_take_route
-  puts 'which train? (input number)'
-  number = gets.chomp.to_i
+  train = choose_train
   puts 'input index which route you want give to train'
   route_index = gets.chomp.to_i
-  train = @trains.detect { |train| train.number == number }
   train.get_route(@route[route_index])
 end
 
 def train_go_to_next_station
-  puts 'which train? (input number)'
-  number = gets.chomp.to_i
-  train = @trains.detect { |train| train.number == number }
+  train = choose_train
   train.go_to_next_station
   puts "now your train at the station #{train.current_station}"
 end
 
 def train_go_to_previous_station
-  puts 'which train? (input number)'
-  number = gets.chomp.to_i
-  train = @trains.detect { |train| train.number == number }
+  train = choose_train
   train.go_to_previos_station
   puts "now your train at the station #{train.current_station}"
 end
 
 def show_trains_on_the_station
-  puts 'input station name'
-  name = gets.chomp
   puts '1 - show cargo trains'
   puts '2 - show passenger trains'
 
@@ -142,20 +124,38 @@ def show_trains_on_the_station
   case choice4
 
   when 1
-    station = @stations.detect { |station| station.name == name }
+    station = choose_station
     station.show_trains('cargo')
 
-  when 2 
-    station = @stations.detect { |station| station.name == name }
+  when 2
+    station = choose_station
     station.show_trains('passenger')
   end
 end
 
-def information
-  @trains.each { |train| puts "you'v got train: #{train.number}" }    
-  @stations.each_with_index { |station, index| puts "you'v got #{station.name} with #{index}" }
-  @route.each_with_index { |route, index| puts "you'v got #{route} with #{index}" }
-end 
+def information_about_trains
+  @trains.each { |train| puts "train: #{train.number}" }
+end
+
+def information_about_stations
+  @stations.each_with_index { |station, index| puts "#{station.name} with #{index}" }
+end
+
+def information_about_routs
+  @route.each_with_index { |route, index| puts "#{route.start_station.name} - #{route.finish_station.name} with #{index}" }
+end
+
+def choose_train
+  puts 'which train? (input number)'
+  number = gets.chomp.to_i
+  train = @trains.detect { |train| train.number == number }
+end
+
+def choose_station
+  puts 'which station (input name)'
+  name = gets.chomp
+  station = @stations.detect { |station| station.name == name }
+end
 
 def menu
   @stations = []
@@ -184,35 +184,41 @@ def menu
       puts 'goodbye, you choose exit!!!'
       exit
     when 1
+      information_about_trains
       create_train
-      information
     when 2
+      information_about_stations
       create_station
-      information
     when 3
+      information_about_trains
       add_car
     when 4
+      information_about_trains
       delete_car
     when 5
-      information
+      information_about_stations
       create_route
     when 6
-      information
+      information_about_stations
+      information_about_routs
       add_station_to_route
     when 7
-      information
+      information_about_stations
+      information_about_routs
       delete_station_from_route
     when 8
-      information
+      information_about_trains
+      information_about_routs
       train_take_route
     when 9
-      information
+      information_about_trains
       train_go_to_next_station
     when 10
-      information
+      information_about_trains
       train_go_to_previous_station
     when 11
-      information
+      information_about_stations
+      information_about_trains
       show_trains_on_the_station
 
     end
@@ -220,4 +226,3 @@ def menu
 end
 
 menu
-

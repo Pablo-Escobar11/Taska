@@ -7,3 +7,4 @@ array << fib
 i += 1
 end 
 print array
+  
